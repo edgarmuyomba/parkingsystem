@@ -1,6 +1,7 @@
 // my_vehicle_page.dart
 
 import 'package:flutter/material.dart';
+import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 
 class MyVehiclePage extends StatelessWidget {
   final String parkingSlot;
@@ -9,6 +10,8 @@ class MyVehiclePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     String userName = "John Doe";
+    int remainingTime = 120 * 60; // in seconds
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Vehicle'),
@@ -17,8 +20,24 @@ class MyVehiclePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Your car is parked in slot: $parkingSlot'),
-            // Add more details or UI elements as needed
+            Icon(
+              Icons.directions_car,
+              size: 100.0,
+              color: Colors.blue,
+            ),
+            SizedBox(height: 20),
+             Text('Your car is parked in slot: $parkingSlot'),
+            SizedBox(height: 10),
+            CountdownTimer(
+              endTime: DateTime.now().millisecondsSinceEpoch + remainingTime * 1000,
+              textStyle: TextStyle(fontSize: 20, color: Colors.black),
+              onEnd: () {
+                // Handle when the countdown ends
+                print('Countdown ended');
+              },
+            ),
+            SizedBox(height: 10),
+            Text('User Name: $userName'),
           ],
         ),
       ),

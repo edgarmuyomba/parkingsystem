@@ -50,9 +50,16 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Login Page'),
+        title: const Text('EASY PARK'),
       ),
-      body: Padding(
+       body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/background_image.jpeg'), // Replace with your image asset path
+            fit: BoxFit.cover,
+          ),
+        ),
+      child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -79,6 +86,7 @@ class LoginPage extends StatelessWidget {
           ],
         ),
       ),
+    ),
     );
   }
 }
