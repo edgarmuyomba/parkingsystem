@@ -52,82 +52,42 @@ class LoginPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('EASY PARK'),
       ),
-       body: Container(
+      body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/background_image.jpeg'), // Replace with your image asset path
+            image: AssetImage(
+                'assets/background_image.jpeg'), // Replace with your image asset path
             fit: BoxFit.cover,
           ),
         ),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextField(
-              controller: emailController,
-              decoration: const InputDecoration(labelText: 'Email'),
-            ),
-            TextField(
-              controller: passwordController,
-              obscureText: true,
-              decoration: const InputDecoration(labelText: 'Password'),
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () => _signInWithEmailAndPassword(context),
-              child: const Text('Login'),
-            ),
-            const SizedBox(height: 8),
-            ElevatedButton(
-              onPressed: () => _signUpWithEmailAndPassword(context),
-              child: const Text('Sign Up'),
-            ),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextField(
+                controller: emailController,
+                decoration: const InputDecoration(labelText: 'Email'),
+              ),
+              TextField(
+                controller: passwordController,
+                obscureText: true,
+                decoration: const InputDecoration(labelText: 'Password'),
+              ),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () => _signInWithEmailAndPassword(context),
+                child: const Text('Login'),
+              ),
+              const SizedBox(height: 8),
+              ElevatedButton(
+                onPressed: () => _signUpWithEmailAndPassword(context),
+                child: const Text('Sign Up'),
+              ),
+            ],
+          ),
         ),
       ),
-    ),
     );
   }
 }
-
-
-
-
-void main() {
-  runApp(MaterialApp(
-    initialRoute: '/',
-    routes: {
-      '/': (context) => LoginPage(),
-      '/home': (context) => const HomePage(),
-      // Add more routes as needed
-    },
-  ));
-}
-
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Home'),
-      ),
-      body: const Center(
-        child: Text('Welcome to the Home Screen!'),
-      ),
-    );
-  }
-}
-
-Future<void>
-signInWithEmailAndPassword(String email, String password) async {
-  try {
-    await
-FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password,);
-  } catch (e) {
-    print("Error: $e");
-  }
-}
-
