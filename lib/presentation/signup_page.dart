@@ -14,8 +14,7 @@ class SignUpPage extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          SingleChildScrollView(
-            child: Column(
+           Column(
               children: [
                 Container(
                   height: 100,
@@ -45,7 +44,6 @@ class SignUpPage extends StatelessWidget {
                 )
               ],
             ),
-          ),
           Column(
             children: [
               Container(
@@ -83,80 +81,84 @@ class SignUpPage extends StatelessWidget {
                     borderRadius: BorderRadius.only(topRight: Radius.circular(75)),
                   ),
                   padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'First Name',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      TextField(
-                        controller: firstNameController,
-                        decoration: InputDecoration(
-                          hintText: "Enter your First name",
-                          border: OutlineInputBorder(),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'First Name',
+                          style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                      ),
-                      SizedBox(height: 20),
-                      Text(
-                        'Last Name',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      TextField(
-                        controller: lastNameController,
-                        decoration: InputDecoration(
-                          hintText: "Enter your last name",
-                          border: OutlineInputBorder(),
+                        TextField(
+                          controller: firstNameController,
+                          decoration: InputDecoration(
+                            hintText: "Enter your First name",
+                            border: OutlineInputBorder(),
+                          ),
                         ),
-                      ),
-                      SizedBox(height: 20),
-                      Text(
-                        'Email',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      TextField(
-                        controller: emailController,
-                        decoration: InputDecoration(
-                          hintText: "Enter your email",
-                          border: OutlineInputBorder(),
+                        SizedBox(height: 20),
+                        Text(
+                          'Last Name',
+                          style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                      ),
-                      SizedBox(height: 20),
-                      Text(
-                        'Password',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      TextField(
-                        controller: passwordController,
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          hintText: "Password",
-                          border: OutlineInputBorder(),
+                        TextField(
+                          controller: lastNameController,
+                          decoration: InputDecoration(
+                            hintText: "Enter your last name",
+                            border: OutlineInputBorder(),
+                          ),
                         ),
-                      ),
-                      SizedBox(height: 20),
-                      Text(
-                        'Confirm Password',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      TextField(
-                        controller: confirmPasswordController,
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          hintText: "Password",
-                          border: OutlineInputBorder(),
+                        SizedBox(height: 20),
+                        Text(
+                          'Email',
+                          style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                      ),
-                      SizedBox(height: 20),
-                      ElevatedButton(
-                        onPressed: () => Navigator.pushNamed(context, '/login'),
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(Color.fromARGB(255, 6, 68, 119)), // Set button background color
-                          foregroundColor: MaterialStateProperty.all<Color>(const Color.fromARGB(255, 253, 248, 248)), // Set button text color
+                        TextField(
+                          controller: emailController,
+                          decoration: InputDecoration(
+                            hintText: "Enter your email",
+                            border: OutlineInputBorder(),
+                          ),
                         ),
-                        child: Text('REGISTER'),
-                      ),
-                    ],
+                        SizedBox(height: 20),
+                        Text(
+                          'Password',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        TextField(
+                          controller: passwordController,
+                          obscureText: true,
+                          decoration: InputDecoration(
+                            hintText: "Password",
+                            border: OutlineInputBorder(),
+                          ),
+                        ),
+                        SizedBox(height: 20),
+                        Text(
+                          'Confirm Password',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        TextField(
+                          controller: confirmPasswordController,
+                          obscureText: true,
+                          decoration: InputDecoration(
+                            hintText: "Password",
+                            border: OutlineInputBorder(),
+                          ),
+                        ),
+                        SizedBox(height: 20),
+                        Center(
+                          child: ElevatedButton(
+                            onPressed: () => Navigator.pushNamed(context, '/login'),
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(Color.fromARGB(255, 6, 68, 119)), // Set button background color
+                              foregroundColor: MaterialStateProperty.all<Color>(const Color.fromARGB(255, 253, 248, 248)), // Set button text color
+                            ),
+                            child: Text('REGISTER'),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
