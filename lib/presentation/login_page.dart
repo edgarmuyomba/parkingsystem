@@ -71,7 +71,7 @@ class LoginPage extends StatelessWidget {
                           padding: const EdgeInsets.all(12.0),
                           child: Transform.scale(
                             scale: 0.7,
-                            child:Image.asset('assets/logo.png'),
+                            child: Image.asset('assets/logo.png'),
                           ),
                         ),
                       ),
@@ -84,7 +84,8 @@ class LoginPage extends StatelessWidget {
                 child: Container(
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius: BorderRadius.only(topRight: Radius.circular(75)),
+                    borderRadius:
+                        BorderRadius.only(topRight: Radius.circular(75)),
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(30.0),
@@ -94,7 +95,8 @@ class LoginPage extends StatelessWidget {
                         SizedBox(height: 25),
                         Text(
                           "Login",
-                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
                         ),
                         SizedBox(height: 50),
                         TextField(
@@ -113,29 +115,30 @@ class LoginPage extends StatelessWidget {
                             border: OutlineInputBorder(),
                           ),
                         ),
-                        SizedBox(height: 20),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                           ElevatedButton(
-                             onPressed: () =>  Navigator.pushNamed(context, '/home'),
-                             style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all<Color>(Color.fromARGB(255, 6, 68, 119)), // Set button background color
-                                foregroundColor: MaterialStateProperty.all<Color>(const Color.fromARGB(255, 253, 248, 248)), // Set button text color
-                                  ),
-                                  child: Text('LOGIN'),
-                                ), 
-                                  SizedBox(height: 8),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             TextButton(
-                              onPressed: () => Navigator.pushNamed(context, '/signup'), 
-                              child: const Text("Create an account")
-                              )
+                                onPressed: () =>
+                                    Navigator.pushNamed(context, '/signup'),
+                                child: const Text("Create an account"))
                           ],
                         ),
-                          ],
+                        SizedBox(height: 20),
+                        Center(
+                          child: ElevatedButton(
+                            onPressed: () =>
+                                Navigator.pushNamed(context, '/home'),
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  Color.fromARGB(255, 6, 68,
+                                      119)), // Set button background color
+                              foregroundColor: MaterialStateProperty.all<Color>(
+                                  const Color.fromARGB(255, 253, 248,
+                                      248)), // Set button text color
+                            ),
+                            child: Text('LOGIN'),
+                          ),
                         ),
                       ],
                     ),
