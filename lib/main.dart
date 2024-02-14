@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter_application_1/presentation/authWrapper.dart';
 import 'package:flutter_application_1/presentation/login_page.dart';
 import 'firebase_options.dart';
-import 'presentation/my_vehicle_page.dart';
+import 'presentation/user_sessions.dart';
 import 'presentation/HomePage.dart';
 import 'presentation/signup_page.dart';
-
 
 void main() async { 
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,12 +21,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,  // Set this to false to hide the debug banner
-       initialRoute: '/',
+       initialRoute: '/user_sessions',
       routes: {
          '/':(context) => LoginPage(),
         '/home': (context) => const home(),
         '/signup':(context) => SignUpPage(),
-        '/myvehicle': (context) => const MyVehiclePage(parkingSlot: "A1"), // Dummy parking slot for illustration
+        '/user_sessions': (context) => UserSessions(), // Dummy parking slot for illustration
         // Add more routes as needed
       },
     );

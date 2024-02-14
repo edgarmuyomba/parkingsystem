@@ -213,7 +213,7 @@ class homeState extends State<home> {
           ),
           const SizedBox(height: 20),
           ElevatedButton(
-            onPressed: () => Navigator.pushNamed(context, '/myvehicle'),
+            onPressed: () => Navigator.pushNamed(context, '/user_sessions'),
             child: const Text('View my Vehicle'),
           ),
         ],

@@ -1,0 +1,1 @@
+const String server = "10.0.2.2";
