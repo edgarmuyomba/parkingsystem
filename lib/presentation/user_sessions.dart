@@ -33,63 +33,155 @@ class _UserSessionsState extends State<UserSessions> {
   }
 
   void show_message(status_code, message) {
-    Color? bg_color = status_code == 200 ? Colors.green : Colors.red[400];
-    IconData icon = status_code == 200 ? Icons.check : Icons.fmd_bad_outlined;
-    String title = status_code == 200 ? "Success" : "Error";
+    Color? bg_color;
+    IconData? icon;
+    String? title;
+    Widget? body;
+    double? height;
 
     double deviceHeight = MediaQuery.of(context).size.height;
 
-    showDialog(
-      context: context, 
-      builder: (BuildContext context) {
-        return Dialog(
-          child: Container(
-            height: 0.2 * deviceHeight,
-            decoration: BoxDecoration(
-              color: bg_color,
-              borderRadius: BorderRadius.circular(10)
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          title,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20
-                          ),
-                          ),
-                        Icon(
-                          icon,
-                          color: Colors.white,
-                          size: 25,
-                          )
-                      ],
+    switch (status_code) {
+      case 200:
+        bg_color = Colors.green;
+        icon = Icons.check;
+        title = "Success";
+        height = 0.25 * deviceHeight;
+        body = Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            const Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Parking Lot",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold
                     ),
-                  ),
-                  SizedBox(height: 10),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Text(
-                      message,
-                      style: TextStyle(
-                        color: Colors.white
-                      ),
-                      ),
-                  )
-                ],
-              ),
+                ),
+                Text(
+                  "Slot Number",
+                  style: TextStyle(color: Colors.white,
+                    fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  "Parked On",
+                  style: TextStyle(color: Colors.white,
+                    fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  "Amount",
+                  style: TextStyle(color: Colors.white,
+                    fontWeight: FontWeight.bold),
+                ),
+              ],
             ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  message["lot"],
+                  style: TextStyle(color: Colors.white),
+                ),
+                Text(
+                  message["slot_number"],
+                  style: TextStyle(color: Colors.white),
+                ),
+                Text(
+                  message["parked_on"],
+                  style: TextStyle(color: Colors.white),
+                ),
+                Text(
+                  "UGX ${message["amount_accumulated"]}",
+                  style: TextStyle(color: Colors.white),
+                ),
+              ],
+            )
+          ],
+        );
+        break;
+
+      case 400:
+        bg_color = Colors.red[400];
+        icon = Icons.fmd_bad_outlined;
+        title = "Error";
+        height = 0.2 * deviceHeight;
+        body = Text(
+          message['detail'],
+          style: TextStyle(
+            color: Colors.white,
           ),
         );
+        break;
+    }
+
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+            child: Container(
+              height: height,
+              decoration: BoxDecoration(
+                  color: bg_color, borderRadius: BorderRadius.circular(10)),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            title!,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20),
+                          ),
+                          Icon(
+                            icon,
+                            color: Colors.white,
+                            size: 25,
+                          )
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: body,
+                    ),
+                    Expanded(child: SizedBox()),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: Text(
+                              "OK",
+                              style: TextStyle(color: Colors.white),
+                            ))
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
+
+    if (status_code == 200) {
+      setState(() {
+        is_active = false;
       });
+      fetchUserSessions().then((value) {
+        setState(() {
+          parking_sessions = value;
+        });
+      });
+    }
   }
 
   Future<void> terminate_session() async {
@@ -163,37 +255,34 @@ class _UserSessionsState extends State<UserSessions> {
                               ),
                               InkWell(
                                 onTap: () => showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      title: Text("Terminate Session?"),
-                                      content: Text("Are you sure you want to end the current session?"),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () => Navigator.pop(context), 
-                                          child: Text(
-                                            "No",
-                                            style: TextStyle(
-                                              color: Colors.red
-                                            ),
-                                            )
-                                          ),
-                                        TextButton(
-                                          onPressed: () => {
-                                            Navigator.pop(context),
-                                            terminate_session()
-                                          }, 
-                                          child: Text(
-                                            "Yes",
-                                            style: TextStyle(
-                                              color: Colors.green
-                                            ),
-                                            )
-                                          )
-                                      ],
-                                    );
-                                  }
-                                ),
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: Text("Terminate Session?"),
+                                        content: Text(
+                                            "Are you sure you want to end the current session?"),
+                                        actions: [
+                                          TextButton(
+                                              onPressed: () =>
+                                                  Navigator.pop(context),
+                                              child: Text(
+                                                "No",
+                                                style: TextStyle(
+                                                    color: Colors.red),
+                                              )),
+                                          TextButton(
+                                              onPressed: () => {
+                                                    Navigator.pop(context),
+                                                    terminate_session()
+                                                  },
+                                              child: Text(
+                                                "Yes",
+                                                style: TextStyle(
+                                                    color: Colors.green),
+                                              ))
+                                        ],
+                                      );
+                                    }),
                                 child: Card(
                                   child: Container(
                                     decoration: BoxDecoration(
