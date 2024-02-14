@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,8 @@ class _UserSessionsState extends State<UserSessions> {
   // dummy details
   String firebase_id = "17UYlu8zmwxSSzBLqx5d8QQfnvx4";
   String user_name = "John";
+
+  late Timer _timer;
 
   bool is_active = false;
   List<ParkingSession> parking_sessions = [];
@@ -56,24 +59,22 @@ class _UserSessionsState extends State<UserSessions> {
                 Text(
                   "Parking Lot",
                   style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold
-                    ),
+                      color: Colors.white, fontWeight: FontWeight.bold),
                 ),
                 Text(
                   "Slot Number",
-                  style: TextStyle(color: Colors.white,
-                    fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
                 ),
                 Text(
                   "Parked On",
-                  style: TextStyle(color: Colors.white,
-                    fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
                 ),
                 Text(
                   "Amount",
-                  style: TextStyle(color: Colors.white,
-                    fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
@@ -195,6 +196,21 @@ class _UserSessionsState extends State<UserSessions> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    const apiCallInterval = Duration(seconds: 2);
+    _timer = Timer.periodic(apiCallInterval, (Timer timer) {
+      fetchUserSessions().then((value) {
+        setState(() {
+          parking_sessions = value;
+        });
+        if (parking_sessions[0].timestamp_end == null) {
+          setState(() {
+            is_active = true;
+            active_session = parking_sessions[0];
+          });
+        }
+      });
+    });
+
     fetchUserSessions().then((value) {
       setState(() {
         parking_sessions = value;
